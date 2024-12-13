@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_bank/account_screen/account_screen.dart';
+import 'package:mobile_bank/card_page/card_page.dart';
+import 'package:mobile_bank/transaction_report_page/transaction_report_page.dart';
+import 'package:mobile_bank/withdraw_screen/withdraw_screen.dart';
 
-import '../transaction_screen/transaction_screen.dart';
-import 'ButtonWidgets.dart';
+import '../mobile_recharge_screen/mobile_recharge_screen.dart';
+import '../pay_bill_screen/pay_bill_screen.dart';
+import '../transfer_screen/transfer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,136 +16,200 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Map<String, String>> transactionHistory = [
-    {"date": "2024-12-01", "amount": "\$250.00", "status": "Sent"},
-    {"date": "2024-12-03", "amount": "\$500.00", "status": "Received"},
-    {"date": "2024-12-05", "amount": "\$100.00", "status": "Sent"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        elevation: 0,
-        title: Row(
-          children: [
-            const Icon(Icons.account_balance_wallet_sharp, color: Colors.white),
-            const SizedBox(width: 10),
-            Text(
-              'My Dashboard',
-              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.grey.shade500),
-            ),
-          ],
-        ),
-      ),
-      backgroundColor: const Color(0xFFF5F5F5),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          const SizedBox(height: 20),
-          // Account Balance Section
-          Text(
-            "Account Balance",
-            style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.deepPurple[50],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView( // Makes the content scrollable
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "\$12,345.67",
-                  style: GoogleFonts.poppins(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.deepPurple,
+                const SizedBox(height: 20),
+                // Greeting Section
+                const Text(
+                  "Good Morning, Mphatso!",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
                   ),
                 ),
-                const Icon(Icons.account_balance_wallet, size: 40, color: Colors.deepPurple),
+                const SizedBox(height: 20),
+                // Account Card
+                Stack(
+                  children: [
+                    Container(
+                      height: 180,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF3A1C71), Color(0xFFFFAF7B)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: Image.asset(
+                        'assets/img.png', // Replace with Visa logo asset
+                        height: 40,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Mphatso Soko",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "OverBridge Expert",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            "4756 •••• •••• 9018",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "\$3,469.52",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                // Quick Actions Grid
+                GridView.count(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                  shrinkWrap: true, // Ensures GridView works inside SingleChildScrollView
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _buildActionButton(
+                      icon: Icons.account_balance_wallet,
+                      label: "Account Card", onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (
+                            context) => const CardPage()),
+                      );
+                    },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.swap_horiz,
+                      label: "Transfer",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (
+                              context) => const AccountPage()),
+                        );
+                      }
+                    ),
+                    _buildActionButton(
+                      icon: Icons.money_off,
+                      label: "Withdraw", onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (
+                          context) => const WithdrawPage())
+                        );
+                    },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.phone_android,
+                      label: "Recharge", onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder:(context) => const MobileRechargeScreen())
+                        );
+                    },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.receipt,
+                      label: "Pay the Bill", onTap: () {
+                        Navigator.push(context, 
+                          MaterialPageRoute(builder: (context) => const PayBillScreen())
+                        );
+                    },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.credit_card,
+                      label: "Credit Card", onTap: () {
+
+                    },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.insert_chart,
+                      label: "TransID Report", onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (
+                            context) => const TransactionReportPage()),
+                      );
+                    },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 30),
-          // Image Section
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.network(
-              'https://img.freepik.com/free-photo/young-fashionable-guy-sitting-cafe-with-smartphone_273609-12857.jpg?t=st=1733432392~exp=1733435992~hmac=3ca069c920443eed80053bf06ba33b005d4641874562be8b7f7dffe1752a736f&w=740',
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 30),
-          // Transaction History Section
-          Text(
-            "Transaction History",
-            style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          Column(
-            children: transactionHistory.map((transaction) {
-              return Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: ListTile(
-                  leading: Icon(
-                    transaction["status"] == "Received" ? Icons.arrow_downward : Icons.arrow_upward,
-                    color: transaction["status"] == "Received" ? Colors.green : Colors.red,
-                  ),
-                  title: Text(
-                    transaction["amount"]!,
-                    style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  subtitle: Text(
-                    transaction["date"]!,
-                    style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),
-                  ),
-                  trailing: Text(
-                    transaction["status"]!,
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: transaction["status"] == "Received" ? Colors.green : Colors.red,
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 30),
-          // Button to Transaction Page
-          const ButtonWidgets(screenBtn: TransactionScreen()),
-        ],
+        ),
       ),
+      // Bottom Navigation Bar
     );
   }
-}
 
-class TransactionPage extends StatelessWidget {
-  const TransactionPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Text(
-          'Transaction Page',
-          style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600),
-        ),
-      ),
-      body: Center(
-        child: Text(
-          'Transaction Page Content Here',
-          style: GoogleFonts.poppins(fontSize: 16),
-        ),
+  // Helper Method for Quick Action Buttons
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    VoidCallback? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundColor: const Color(0xFFEEF2FF),
+            radius: 30,
+            child: Icon(icon, color: const Color(0xFF3A1C71), size: 28),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }

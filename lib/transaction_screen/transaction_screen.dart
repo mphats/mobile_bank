@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile_bank/home_screen/ButtonWidgets.dart';
+import 'package:mobile_bank/withdraw_screen/deposit_screen.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({super.key});
@@ -148,6 +150,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
               style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
             ),
           ),
+          const SizedBox(height: 25,),
+          const ButtonWidgets(screenBtn: DepositScreen(), tapMe: 'Deposit money',),
+
           const SizedBox(height: 20),
           // Response message display
           if (responseMessage != null)
