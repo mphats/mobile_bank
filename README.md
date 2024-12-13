@@ -1,5 +1,7 @@
 # mobile_bank
 
+Standard updated e-banking ui with all functionalities
+
 A new Flutter project.
 
 ## Getting Started
